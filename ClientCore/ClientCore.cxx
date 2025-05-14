@@ -14,6 +14,7 @@ bool ClientCore::Connect(const std::string& ip, int port)
         cf_->Print("Connected to server {}:{} success.", ip, port);
         return true;
     } catch (const std::exception& ex) {
+        cf_->Print("Connect to server {}:{} failed. {}", ip, port, ex.what());
         return false;
     }
 }
@@ -25,3 +26,36 @@ void ClientCore::Disconnect()
         socket_.close();
     }
 }
+
+bool ClientCore::Send(const char* data, int len)
+{
+    try {
+        asio::write(socket_, asio::buffer(data, len));
+        return true;
+    } catch (const std::exception& ex) {
+        cf_->Print("Send data to server failed. {}", ex.what());
+        return false;
+    }
+}
+
+void ClientCore::Recv()
+{
+    auto self(shared_from_this());
+    socket_.async_read_some(asio::buffer(recvBuffer_), [this, self](const std::error_code& ec, std::size_t len) {
+        if (!ec) {
+            mutBuffer_.Push(recvBuffer_.data(), len);
+            while (true) {
+                auto* frame = Protocol::ParseBuffer(mutBuffer_);
+                if (frame == nullptr) {
+                    break;
+                }
+                UseFrame(frame);
+                delete frame;
+            }
+            return;
+        }
+        cf_->Print("Receive data from server failed. {}", ec.message());
+    }
+}
+
+void ClientCore::UseFrame(FrameBuffer* frame) {}
