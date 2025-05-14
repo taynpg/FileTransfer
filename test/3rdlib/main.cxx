@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "cereal_test.hpp"
+
 /*----------------------------------------------------------------------
  *
  * This file is a test program to verify:
@@ -14,5 +16,11 @@
 
 int main()
 {
+    // Test binary serialization
+    test_binary_serialization();
+    // Test JSON serialization
+    test_json_serialization();
+
+    std::cout << "\nAll tests completed successfully!" << std::endl;
     return 0;
 }
