@@ -15,6 +15,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}
 include_directories(3rd)
 include_directories(Information)
 include_directories(ClientInterface)
+
 add_subdirectory(Protocol)
 add_subdirectory(Gui)
+add_subdirectory(ClientCore)
 add_subdirectory(Test)

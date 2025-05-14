@@ -33,7 +33,7 @@ However, it has a key advantage:
 
 # Build
 
-* C++20 Standard.
+- Using C++20 standard (with gcc12 as the highest available version on Windows XP; for compatibility, only C++20 ​language features are used, avoiding C++20 ​library features).
 
 - Basic components (gui-client-side) for Qt5 and above.
 

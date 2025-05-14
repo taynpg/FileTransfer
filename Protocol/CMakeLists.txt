@@ -10,3 +10,4 @@ Protocol.h
 )
 
 add_library(Protocol STATIC ${SOURCES})
+target_include_directories(Protocol PUBLIC ${CMAKE_CURRENT_LIST_DIR})
