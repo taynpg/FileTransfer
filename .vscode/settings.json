@@ -22,15 +22,13 @@
     },
     "cmake.configureArgs": [
         "-Wno-dev",
-        "-DCMAKE_PREFIX_PATH:STRING=${env:QT_LIB_ROOT}"
     ],
     "cmake.environment": {
-        "PATH": "${env:PATH};${env:QT_LIB_ROOT}/bin",
-        "LD_LIBRARY_PATH": "$LD_LIBRARY_PATH:${env:QT_LIB_ROOT}/bin"
+        "QT_LIB_ROOT": "C:/Qt6/6.8.3/mingw_64"
     },
-    // "cmake.configureSettings": {
-    //     "CMAKE_TOOLCHAIN_FILE": "${env:VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-    // },
+    "cmake.configureSettings": {
+        "CMAKE_PREFIX_PATH": "${env:QT_LIB_ROOT}"
+    },
     "cmake.options.statusBarVisibility": "visible",
     "cmake.generator": "Ninja",
     "C_Cpp.default.compileCommands": "${workspaceRoot}/build/compile_commands.json",
