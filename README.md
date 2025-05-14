@@ -47,9 +47,9 @@ However, it has a key advantage:
 4. **UI-Independent Core** – Keep communication logic completely separate from UI libraries.
 5. **UTF-8 Encoding** – Strictly enforce UTF-8 across all components.
 6. **Interface-Based Interaction** – Core communicates with UI/console via defined interfaces.
-7. **Legacy Console Handling** – If the console (e.g., Windows XP) cannot print UTF-8, suppress output and log to file (UTF-8).
+7. **Legacy Console Handling** – If the console (e.g., Windows XP) cannot print UTF-8, only log to file (UTF-8).
 8. **Dedicated Task UI** – A separate window to list all transfer tasks with checkable operations.
-9. **Progress Monitoring** – Dual progress bars during transfers (overall + current file), with cancel/abort options.
+9. **Progress Monitoring** – Dual progress bars during transfers, with cancel/abort options.
 10. **Task History** – Save task records (unique names, default = timestamp).
 11. **Transfer Flags** – Configurable options (e.g., overwrite, skip existing).
 12. **Pre-Transfer Validation** – Verify target file existence before starting.

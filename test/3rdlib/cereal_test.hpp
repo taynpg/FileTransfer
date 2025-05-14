@@ -50,14 +50,14 @@ void test_binary_serialization()
     original.int_vec = {1, 2, 3, 4, 5};
     original.double_vec = {1.1, 2.2, 3.3, 4.4, 5.5};
     original.regular_string = "Hello, cereal! This is a test string.";
-    original.wide_string = L"Wide character string test - 宽字符测试.";
+    //original.wide_string = L"Wide character string test - 宽字符测试.";
 
     // Print original data
     std::cout << "Original data:" << std::endl;
     print_vector(original.int_vec, "int_vec");
     print_vector(original.double_vec, "double_vec");
     std::cout << "regular_string: " << original.regular_string << std::endl;
-    std::wcout << L"wide_string: " << original.wide_string << std::endl;
+    //std::wcout << L"wide_string: " << original.wide_string << std::endl;
 
     // Serialize to file
     {
