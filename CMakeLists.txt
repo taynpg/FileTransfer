@@ -12,4 +12,5 @@ set(CMAKE_DEBUG_POSTFIX "d")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/) 
 
-add_executable(FileTransfer main.cpp)
+include_directories(3rd)
+add_subdirectory(test)
