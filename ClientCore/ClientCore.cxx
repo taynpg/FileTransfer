@@ -55,7 +55,7 @@ void ClientCore::Recv()
             return;
         }
         cf_->Print("Receive data from server failed. {}", ec.message());
-    }
+    });
 }
 
 void ClientCore::UseFrame(FrameBuffer* frame) {}
