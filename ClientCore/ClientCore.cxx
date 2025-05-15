@@ -27,6 +27,21 @@ void ClientCore::Disconnect()
     }
 }
 
+bool ClientCore::Send(FrameBuffer* frame)
+{
+    if (frame == nullptr) {
+        return false;
+    }
+    char* od = nullptr;
+    int odLen = 0;
+    if (!Protocol::PackBuffer(frame, &od, odLen)) {
+        return false;
+    }
+    auto ret = Send(od, odLen);
+    delete[] od;
+    return ret;
+}
+
 bool ClientCore::Send(const char* data, int len)
 {
     try {
@@ -41,21 +56,22 @@ bool ClientCore::Send(const char* data, int len)
 void ClientCore::Recv()
 {
     auto self(shared_from_this());
-    socket_.async_read_some(asio::buffer(recvBuffer_), [this, self](const std::error_code& ec, std::size_t len) {
-        if (!ec) {
-            mutBuffer_.Push(recvBuffer_.data(), len);
-            while (true) {
-                auto* frame = Protocol::ParseBuffer(mutBuffer_);
-                if (frame == nullptr) {
-                    break;
-                }
-                UseFrame(frame);
-                delete frame;
-            }
-            return;
-        }
-        cf_->Print("Receive data from server failed. {}", ec.message());
-    });
+    socket_.async_read_some(asio::buffer(recvBuffer_),
+                            [this, self](const std::error_code& ec, std::size_t len) {
+                                if (!ec) {
+                                    mutBuffer_.Push(recvBuffer_.data(), len);
+                                    while (true) {
+                                        auto* frame = Protocol::ParseBuffer(mutBuffer_);
+                                        if (frame == nullptr) {
+                                            break;
+                                        }
+                                        UseFrame(frame);
+                                        delete frame;
+                                    }
+                                    return;
+                                }
+                                cf_->Print("Receive data from server failed. {}", ec.message());
+                            });
 }
 
 void ClientCore::UseFrame(FrameBuffer* frame) {}

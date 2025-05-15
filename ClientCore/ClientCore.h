@@ -3,8 +3,8 @@
 
 #include <ClientInterface.hpp>
 #include <Protocol.h>
-#include <asio.hpp>
 #include <array>
+#include <asio.hpp>
 
 class ClientCore : public std::enable_shared_from_this<ClientCore>
 {
@@ -16,6 +16,26 @@ public:
     void Disconnect();
 
 private:
+    template <typename T>
+    bool Send(const T& info, FrameBufferType type, const std::string& fid, const std::string& tid)
+    {
+        std::stringstream ss;
+        {
+            cereal::BinaryOutputArchive oarchive(ss);
+            oarchive(info);
+        }
+        auto buf = std::make_shared<FrameBuffer>();
+        buf->fid = fid;
+        buf->tid = tid;
+        std::swap(buf->fid, buf->tid);
+
+        auto ssData = ss.str();
+        buf->len = ssData.size();
+        buf->data = ssData.data();
+        buf->dataType = type;
+        return Send(buf.get());
+    }
+    bool Send(FrameBuffer* frame);
     bool Send(const char* data, int len);
     void Recv();
     void UseFrame(FrameBuffer* frame);

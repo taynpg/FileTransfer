@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(FileTransferTest LANGUAGES CXX)
-
+project(Util LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(3rdlib)
+add_library(Util STATIC Util.cxx Util.h)

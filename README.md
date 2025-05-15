@@ -33,7 +33,7 @@ However, it has a key advantage:
 
 # Build
 
-- Using C++20 standard (with gcc12 as the highest available version on Windows XP; for compatibility, only C++20 ​language features are used, avoiding C++20 ​library features).
+- Using C++17 standard.
 
 - Basic components (gui-client-side) for Qt5 and above.
 
@@ -53,7 +53,7 @@ However, it has a key advantage:
 10. **Task History** – Save task records (unique names, default = timestamp).
 11. **Transfer Flags** – Configurable options (e.g., overwrite, skip existing).
 12. **Pre-Transfer Validation** – Verify target file existence before starting.
-13. **C++20 Compliance** – Enforce compiler standardization.
+13. **C++17 Compliance** – Enforce compiler standardization.
 14. **Client Aliasing** – Assign random (but persistent) dictionary-based names to identify `IP:PORT`.
 15. **Basic Encryption** – Implement secure transfers via TinyAES.
 16. **Resume Support** – Allow interrupted downloads to be resumed.

@@ -8,13 +8,13 @@
 #include <string>
 #include <vector>
 
-enum FileType : uint32_t { None = 0, File, Dir, Link };
+enum FileType : uint32_t { None = 0, File, Dir, Link, Other };
 
 struct DirFileInfo {
-    std::wstring name;
+    std::string name;
     uint64_t size = 0;
     FileType type = None;
-    std::wstring fullPath;
+    std::string fullPath;
     uint16_t permission = 0;
     uint64_t lastModifyTime = 0;
     DirFileInfo() = default;

@@ -1,9 +1,9 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
-#include <vector>
-#include <string>
 #include <cstdint>
+#include <string>
+#include <vector>
 
 // It is specified here that the first 30 contents (inclusive) are
 // used for communication with the server.
@@ -23,12 +23,10 @@ enum FrameBufferType : uint16_t {
 struct FrameBuffer {
     FrameBuffer();
     ~FrameBuffer();
-
+    char* data;
     int32_t len{};
-    char* dataMut;
     std::string fid;
     std::string tid;
-    const char* dataConst;
     FrameBufferType dataType{};
 };
 
@@ -59,4 +57,4 @@ public:
     static bool PackBuffer(FrameBuffer* frame, char** buf, int32_t& len);
 };
 
-#endif // PROTOCOL_H
+#endif   // PROTOCOL_H
