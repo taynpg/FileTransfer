@@ -20,14 +20,18 @@ struct DirFileInfo {
     DirFileInfo() = default;
     template <class Archive> void serialize(Archive& archive)
     {
-        archive(CEREAL_NVP(name), CEREAL_NVP(size), CEREAL_NVP(type), CEREAL_NVP(fullPath),
-                CEREAL_NVP(permission), CEREAL_NVP(lastModifyTime));
+        archive(CEREAL_NVP(name), CEREAL_NVP(size), CEREAL_NVP(type),
+                CEREAL_NVP(fullPath), CEREAL_NVP(permission),
+                CEREAL_NVP(lastModifyTime));
     }
 };
 
 struct DirFileInfoVec {
     std::vector<DirFileInfo> vec;
-    template <class Archive> void serialize(Archive& archive) { archive(CEREAL_NVP(vec)); }
+    template <class Archive> void serialize(Archive& archive)
+    {
+        archive(CEREAL_NVP(vec));
+    }
 };
 
 #endif

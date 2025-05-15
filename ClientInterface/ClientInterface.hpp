@@ -2,6 +2,7 @@
 #define CLIENTINTERFACE_HPP
 
 #include <string>
+
 #include "InfoClient.hpp"
 
 class ClientUserInterface

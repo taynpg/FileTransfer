@@ -9,7 +9,8 @@
 class ClientCore : public std::enable_shared_from_this<ClientCore>
 {
 public:
-    ClientCore(asio::io_context& ioContext, const std::shared_ptr<ClientUserInterface>& cf);
+    ClientCore(asio::io_context& ioContext,
+               const std::shared_ptr<ClientUserInterface>& cf);
 
 public:
     bool Connect(const std::string& ip, int port);
@@ -17,7 +18,8 @@ public:
 
 private:
     template <typename T>
-    bool Send(const T& info, FrameBufferType type, const std::string& fid, const std::string& tid)
+    bool Send(const T& info, FrameBufferType type, const std::string& fid,
+              const std::string& tid)
     {
         std::stringstream ss;
         {

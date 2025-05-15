@@ -17,7 +17,10 @@ struct InfoClient {
 
 struct InfoClientVec {
     std::vector<InfoClient> vec;
-    template <class Archive> void serialize(Archive& archive) { archive(CEREAL_NVP(vec)); }
+    template <class Archive> void serialize(Archive& archive)
+    {
+        archive(CEREAL_NVP(vec));
+    }
 };
 
 #endif   // INFOCLIENT_HPP

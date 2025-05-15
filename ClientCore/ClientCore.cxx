@@ -1,6 +1,7 @@
 #include "ClientCore.h"
 
-ClientCore::ClientCore(asio::io_context& ioContext, const std::shared_ptr<ClientUserInterface>& cf)
+ClientCore::ClientCore(asio::io_context& ioContext,
+                       const std::shared_ptr<ClientUserInterface>& cf)
     : socket_(ioContext), cf_(cf)
 {
 }
@@ -56,22 +57,23 @@ bool ClientCore::Send(const char* data, int len)
 void ClientCore::Recv()
 {
     auto self(shared_from_this());
-    socket_.async_read_some(asio::buffer(recvBuffer_),
-                            [this, self](const std::error_code& ec, std::size_t len) {
-                                if (!ec) {
-                                    mutBuffer_.Push(recvBuffer_.data(), len);
-                                    while (true) {
-                                        auto* frame = Protocol::ParseBuffer(mutBuffer_);
-                                        if (frame == nullptr) {
-                                            break;
-                                        }
-                                        UseFrame(frame);
-                                        delete frame;
-                                    }
-                                    return;
-                                }
-                                cf_->Print("Receive data from server failed. {}", ec.message());
-                            });
+    socket_.async_read_some(
+        asio::buffer(recvBuffer_),
+        [this, self](const std::error_code& ec, std::size_t len) {
+            if (!ec) {
+                mutBuffer_.Push(recvBuffer_.data(), len);
+                while (true) {
+                    auto* frame = Protocol::ParseBuffer(mutBuffer_);
+                    if (frame == nullptr) {
+                        break;
+                    }
+                    UseFrame(frame);
+                    delete frame;
+                }
+                return;
+            }
+            cf_->Print("Receive data from server failed. {}", ec.message());
+        });
 }
 
 void ClientCore::UseFrame(FrameBuffer* frame) {}

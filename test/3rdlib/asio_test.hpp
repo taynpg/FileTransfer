@@ -14,22 +14,27 @@ private:
     void do_read()
     {
         auto self(shared_from_this());
-        socket_.async_read_some(asio::buffer(data_, max_length), [this, self](std::error_code ec, std::size_t length) {
-            if (!ec) {
-                std::cout << "Received: " << std::string(data_, length) << std::endl;
-                do_write(length);
-            }
-        });
+        socket_.async_read_some(
+            asio::buffer(data_, max_length),
+            [this, self](std::error_code ec, std::size_t length) {
+                if (!ec) {
+                    std::cout << "Received: " << std::string(data_, length)
+                              << std::endl;
+                    do_write(length);
+                }
+            });
     }
 
     void do_write(std::size_t length)
     {
         auto self(shared_from_this());
-        asio::async_write(socket_, asio::buffer(data_, length), [this, self](std::error_code ec, std::size_t /*length*/) {
-            if (!ec) {
-                do_read();
-            }
-        });
+        asio::async_write(
+            socket_, asio::buffer(data_, length),
+            [this, self](std::error_code ec, std::size_t /*length*/) {
+                if (!ec) {
+                    do_read();
+                }
+            });
     }
 
     tcp::socket socket_;
@@ -40,7 +45,11 @@ private:
 class Server
 {
 public:
-    Server(asio::io_context& io_context, short port) : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)) { do_accept(); }
+    Server(asio::io_context& io_context, short port)
+        : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
+    {
+        do_accept();
+    }
 
 private:
     void do_accept()

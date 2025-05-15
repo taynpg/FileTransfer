@@ -13,7 +13,8 @@ struct InfoCommunicate {
     uint8_t mark{};
     template <class Archive> void serialize(Archive& archive)
     {
-        archive(CEREAL_NVP(UUID), CEREAL_NVP(data), CEREAL_NVP(msg), CEREAL_NVP(mark));
+        archive(CEREAL_NVP(UUID), CEREAL_NVP(data), CEREAL_NVP(msg),
+                CEREAL_NVP(mark));
     }
 };
 
