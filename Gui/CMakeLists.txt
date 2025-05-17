@@ -12,11 +12,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-set(PROJECT_SOURCES
-        main.cpp
-        FileTransferGUI.cpp
-        FileTransferGUI.h
-        FileTransferGUI.ui
+set(PROJECT_SOURCES main.cpp
+FileTransferGUI.cpp FileTransferGUI.h FileTransferGUI.ui
+Control/LogControl.h Control/LogControl.cpp Control/LogControl.ui
+Control/FileControl.h Control/FileControl.cpp Control/FileControl.ui
+Control/ConnectControl.h Control/ConnectControl.cpp Control/ConnectControl.ui
+Control/CompareControl.h Control/CompareControl.cpp Control/CompareControl.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

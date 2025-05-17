@@ -24,7 +24,7 @@
         "-Wno-dev",
     ],
     "cmake.environment": {
-        "QT_LIB_ROOT": "C:/Qt6/6.8.3/mingw_64"
+        "QT_LIB_ROOT": "C:/Qt/6.8.3/msvc2022_64"
     },
     "cmake.configureSettings": {
         "CMAKE_PREFIX_PATH": "${env:QT_LIB_ROOT}"
