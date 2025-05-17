@@ -4,6 +4,7 @@ PointerAlignment: Left
 AccessModifierOffset: -4
 ReflowComments: Always
 SpacesBeforeTrailingComments: 3
+AllowShortFunctionsOnASingleLine: None
 BreakBeforeBraces: Custom
 BraceWrapping:
     AfterFunction: true

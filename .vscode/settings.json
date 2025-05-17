@@ -24,7 +24,8 @@
         "-Wno-dev",
     ],
     "cmake.environment": {
-        "QT_LIB_ROOT": "C:/Qt/6.8.3/msvc2022_64"
+        "QT_LIB_ROOT": "C:/Qt/6.8.3/msvc2022_64",
+        "PATH": "${env:QT_LIB_ROOT}/bin;${env:PATH}"
     },
     "cmake.configureSettings": {
         "CMAKE_PREFIX_PATH": "${env:QT_LIB_ROOT}"
@@ -144,6 +145,7 @@
         "span": "cpp",
         "stop_token": "cpp",
         "cinttypes": "cpp",
-        "stdfloat": "cpp"
+        "stdfloat": "cpp",
+        "resumable": "cpp"
     }
 }

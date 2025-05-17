@@ -1,7 +1,12 @@
 #ifndef FILETRANSFERGUI_H
 #define FILETRANSFERGUI_H
 
+#include <ClientCore.h>
 #include <QMainWindow>
+#include <thread>
+
+#include "Control/LogControl.h"
+#include "GUIUtil/GUIInterface.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,6 +23,18 @@ public:
     ~FileTransferGUI();
 
 private:
+    void InitControl();
+    void ControlSignal();
+    void ControlLayout();
+    void LastStart();
+
+private:
+    bool thRun_{false};
+    std::thread thContext_;
+    asio::io_context ioContext_;
+    std::shared_ptr<ClientCore> clientCore_;
+    std::shared_ptr<GUIInterface> userInterface_;
     Ui::FileTransferGUI* ui;
+    LogPrint* log_;
 };
 #endif   // FILETRANSFERGUI_H

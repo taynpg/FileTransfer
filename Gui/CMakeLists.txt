@@ -18,6 +18,7 @@ Control/LogControl.h Control/LogControl.cpp Control/LogControl.ui
 Control/FileControl.h Control/FileControl.cpp Control/FileControl.ui
 Control/ConnectControl.h Control/ConnectControl.cpp Control/ConnectControl.ui
 Control/CompareControl.h Control/CompareControl.cpp Control/CompareControl.ui
+GUIUtil/GUIInterface.h GUIUtil/GUIInterface.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -43,7 +44,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(FileTransferGUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(FileTransferGUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ClientCore Protocol)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

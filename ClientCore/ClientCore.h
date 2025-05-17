@@ -9,10 +9,10 @@
 class ClientCore : public std::enable_shared_from_this<ClientCore>
 {
 public:
-    ClientCore(asio::io_context& ioContext,
-               const std::shared_ptr<ClientUserInterface>& cf);
+    ClientCore(asio::io_context& ioContext);
 
 public:
+    void SetUserInterface(const std::shared_ptr<ClientUserInterface>& cf);
     bool Connect(const std::string& ip, int port);
     void Disconnect();
 

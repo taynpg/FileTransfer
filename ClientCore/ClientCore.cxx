@@ -1,8 +1,6 @@
 #include "ClientCore.h"
 
-ClientCore::ClientCore(asio::io_context& ioContext,
-                       const std::shared_ptr<ClientUserInterface>& cf)
-    : socket_(ioContext), cf_(cf)
+ClientCore::ClientCore(asio::io_context& ioContext) : socket_(ioContext)
 {
 }
 
@@ -12,10 +10,11 @@ bool ClientCore::Connect(const std::string& ip, int port)
         asio::ip::tcp::resolver resolver(ioContext_);
         auto ep = resolver.resolve(ip, std::to_string(port));
         asio::connect(socket_, ep);
-        cf_->Print("Connected to server {}:{} success.", ip, port);
+        cf_->PrintInfo("Connected to server {}:{} success.", ip, port);
         return true;
     } catch (const std::exception& ex) {
-        cf_->Print("Connect to server {}:{} failed. {}", ip, port, ex.what());
+        cf_->PrintError("Connect to server {}:{} failed. {}", ip, port,
+                        ex.what());
         return false;
     }
 }
@@ -43,13 +42,18 @@ bool ClientCore::Send(FrameBuffer* frame)
     return ret;
 }
 
+void ClientCore::SetUserInterface(const std::shared_ptr<ClientUserInterface>& cf)
+{
+    cf_ = cf;
+}
+
 bool ClientCore::Send(const char* data, int len)
 {
     try {
         asio::write(socket_, asio::buffer(data, len));
         return true;
     } catch (const std::exception& ex) {
-        cf_->Print("Send data to server failed. {}", ex.what());
+        cf_->PrintError("Send data to server failed. {}", ex.what());
         return false;
     }
 }
@@ -72,8 +76,11 @@ void ClientCore::Recv()
                 }
                 return;
             }
-            cf_->Print("Receive data from server failed. {}", ec.message());
+            cf_->PrintError("Receive data from server failed. {}",
+                            ec.message());
         });
 }
 
-void ClientCore::UseFrame(FrameBuffer* frame) {}
+void ClientCore::UseFrame(FrameBuffer* frame)
+{
+}

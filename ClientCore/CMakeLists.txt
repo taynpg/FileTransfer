@@ -11,3 +11,4 @@ ClientCore.h
 
 add_library(ClientCore STATIC ${SOURCES})
 target_link_libraries(ClientCore PRIVATE Protocol)
+target_include_directories(ClientCore PUBLIC ${CMAKE_CURRENT_LIST_DIR})
