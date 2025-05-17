@@ -7,6 +7,7 @@
 
 #include "Control/LogControl.h"
 #include "GUIUtil/GUIInterface.h"
+#include "Control/ConnectControl.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,5 +37,6 @@ private:
     std::shared_ptr<GUIInterface> userInterface_;
     Ui::FileTransferGUI* ui;
     LogPrint* log_;
+    Connecter* connecter_;
 };
 #endif   // FILETRANSFERGUI_H

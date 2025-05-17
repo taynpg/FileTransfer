@@ -3,49 +3,32 @@
 #include <spdlog/fmt/bundled/args.h>
 #include <spdlog/fmt/bundled/core.h>
 
-#define PARSE_ARGS()                                                           \
-    va_list args;                                                              \
-    va_start(args, str);                                                       \
-    std::string formatStr;                                                     \
-    try {                                                                      \
-        formatStr = fmt::vformat(str, fmt::make_format_args(args));            \
-    } catch (const std::exception& e) {                                        \
-        va_end(args);                                                          \
-        logPrint_->Error(e.what());                                            \
-        return;                                                                \
-    }                                                                          \
-    va_end(args);                                                              \
-    auto qStr = QString::fromStdString(formatStr);
+void GUIInterface::SetLogControl(LogPrint* logPrint)
+{
+    logPrint_ = logPrint;
+}
 
 void GUIInterface::Run(const InfoClientVec& vec)
 {
 }
 
-void GUIInterface::PrintInfo(const char* str, ...)
+void GUIInterface::Print(PrintType type, const std::string& str)
 {
-    PARSE_ARGS();
-    logPrint_->Info(qStr);
-}
-
-void GUIInterface::PrintError(const char* str, ...)
-{
-    PARSE_ARGS();
-    logPrint_->Error(qStr);
-}
-
-void GUIInterface::PrintWarn(const char* str, ...)
-{
-    PARSE_ARGS();
-    logPrint_->Warn(qStr);
-}
-
-void GUIInterface::PrintDebug(const char* str, ...)
-{
-    PARSE_ARGS();
-    logPrint_->Debug(qStr);
-}
-
-void GUIInterface::SetLogControl(LogPrint* logPrint)
-{
-    logPrint_ = logPrint;
+    auto qstr = QString::fromStdString(str);
+    switch (type) {
+    case PT_DEBUG:
+        logPrint_->Debug(qstr);
+        break;
+    case PT_INFO:
+        logPrint_->Info(qstr);
+        break;
+    case PT_WARN:
+        logPrint_->Warn(qstr);
+        break;
+    case PT_ERROR:
+        logPrint_->Error(qstr);
+        break;
+    default:
+        break;
+    }
 }

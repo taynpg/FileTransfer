@@ -1,9 +1,9 @@
 #ifndef LOGCONTROL_H
 #define LOGCONTROL_H
 
+#include <QBrush>
 #include <QStandardItemModel>
 #include <QWidget>
-#include <QBrush>
 
 namespace Ui {
 class LogPrint;
@@ -23,9 +23,13 @@ public:
     void Error(const QString& message);
     void Debug(const QString& message);
 
+public:
+    std::string now_str();
+
 private:
     void InitControl();
     void Print(const QString& message, const QBrush& color);
+
 private:
     Ui::LogPrint* ui;
     QStandardItemModel* model_;

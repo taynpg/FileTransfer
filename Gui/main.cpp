@@ -5,6 +5,14 @@
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
+
+#ifdef _WIN32
+    QFont font("Microsoft YaHei", 9);
+    a.setFont(font);
+    //a.setStyle("windows");
+    a.setStyle("fusion");
+#endif
+
     FileTransferGUI w;
     w.show();
     return a.exec();

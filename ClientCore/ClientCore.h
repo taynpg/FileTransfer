@@ -2,6 +2,7 @@
 #define CLIENT_CORE_H
 
 #include <ClientInterface.hpp>
+#include <globalDefine.h>
 #include <Protocol.h>
 #include <array>
 #include <asio.hpp>

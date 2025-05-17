@@ -2,6 +2,7 @@
 #define GUIINTERFACE_H
 
 #include <ClientInterface.hpp>
+#include <string>
 
 #include "Gui/Control/LogControl.h"
 
@@ -10,13 +11,11 @@ class GUIInterface : public ClientUserInterface
 {
 public:
     void Run(const InfoClientVec& vec) override;
-    void PrintInfo(const char* str, ...) override;
-    void PrintError(const char* str, ...) override;
-    void PrintWarn(const char* str, ...) override;
-    void PrintDebug(const char* str, ...) override;
+    void Print(PrintType type, const std::string& str) override;
 
 public:
     void SetLogControl(LogPrint* logPrint);
+    std::string now_str();
 
 private:
     LogPrint* logPrint_;

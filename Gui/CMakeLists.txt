@@ -9,6 +9,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_definitions(-DUSE_QT_GUI)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
@@ -19,6 +20,7 @@ Control/FileControl.h Control/FileControl.cpp Control/FileControl.ui
 Control/ConnectControl.h Control/ConnectControl.cpp Control/ConnectControl.ui
 Control/CompareControl.h Control/CompareControl.cpp Control/CompareControl.ui
 GUIUtil/GUIInterface.h GUIUtil/GUIInterface.cpp
+GUIUtil/Public.h GUIUtil/Public.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

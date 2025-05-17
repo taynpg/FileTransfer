@@ -31,6 +31,10 @@ void FileTransferGUI::InitControl()
 
     clientCore_ = std::make_shared<ClientCore>(ioContext_);
     clientCore_->SetUserInterface(userInterface_);
+
+    connecter_ = new Connecter(this);
+    connecter_->SetClientCore(clientCore_);
+    connecter_->SetLogPrint(log_);
 }
 
 void FileTransferGUI::ControlSignal()
@@ -39,10 +43,11 @@ void FileTransferGUI::ControlSignal()
 
 void FileTransferGUI::ControlLayout()
 {
-    auto* splitter = new QSplitter(Qt::Vertical);
-    auto* topHorizon = new QSplitter(Qt::Horizontal);
-    topHorizon->addWidget(log_);
-    splitter->addWidget(topHorizon);
+    auto* splitter = new QSplitter(Qt::Horizontal);
+    auto* sA = new QSplitter(Qt::Vertical);
+    sA->addWidget(connecter_);
+    sA->addWidget(log_);
+    splitter->addWidget(sA);
     setCentralWidget(splitter);
 }
 
