@@ -3,6 +3,47 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
+#ifdef _WIN32
+#include <windows.h>
+std::string u8_to_ansi(const std::string& str)
+{
+    int wideCharLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+    if (wideCharLen <= 0) {
+        return "";
+    }
+    std::wstring wideStr(wideCharLen, L'\0');
+    MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, &wideStr[0], wideCharLen);
+    int gbkLen = WideCharToMultiByte(CP_ACP, 0, wideStr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+    if (gbkLen <= 0) {
+        return "";
+    }
+    std::string gbkStr(gbkLen, '\0');
+    WideCharToMultiByte(CP_ACP, 0, wideStr.c_str(), -1, &gbkStr[0], gbkLen, nullptr, nullptr);
+
+    gbkStr.resize(gbkLen - 1);
+    return gbkStr;
+}
+std::string ansi_to_u8(const std::string& str)
+{
+    int wideCharLen = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, nullptr, 0);
+    if (wideCharLen <= 0) {
+        return "";
+    }
+    std::wstring wideStr(wideCharLen, L'\0');
+    MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wideStr[0], wideCharLen);
+
+    int utf8Len = WideCharToMultiByte(CP_UTF8, 0, wideStr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+    if (utf8Len <= 0) {
+        return "";
+    }
+    std::string utf8Str(utf8Len, '\0');
+    WideCharToMultiByte(CP_UTF8, 0, wideStr.c_str(), -1, &utf8Str[0], utf8Len, nullptr, nullptr);
+
+    utf8Str.resize(utf8Len - 1);
+    return utf8Str;
+}
+#endif
+
 UtilRet Util::GetHomeDir(std::string& home)
 {
     UtilRet r;
@@ -77,4 +118,13 @@ UtilRet Util::GetDirFile(const std::string& dir, DirFileInfoVec& info)
     }
     r.ret = true;
     return r;
+}
+
+std::string Util::STLWhat(const std::exception& e)
+{
+#ifdef _WIN32
+    return ansi_to_u8(e.what());
+#else
+    return e.what();
+#endif
 }

@@ -5,7 +5,9 @@
 #include <globalDefine.h>
 #include <Protocol.h>
 #include <array>
+#include <mutex>
 #include <asio.hpp>
+#include <Util.h>
 
 class ClientCore : public std::enable_shared_from_this<ClientCore>
 {
@@ -46,6 +48,7 @@ private:
 private:
     bool thRun_;
     MutBuffer mutBuffer_;
+    std::mutex conMutex_;
     asio::ip::tcp::socket socket_;
     asio::io_context ioContext_;
     std::array<char, 1024> recvBuffer_;
