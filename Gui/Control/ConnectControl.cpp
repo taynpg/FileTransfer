@@ -81,4 +81,6 @@ void Connecter::InitControl()
     ui->edPort->setText("9009");
     connect(ui->btnConnect, &QPushButton::clicked, this, &Connecter::Connect);
     connect(this, &Connecter::sendConnect, this, &Connecter::setState);
+
+    setMaximumSize(300, 300);
 }

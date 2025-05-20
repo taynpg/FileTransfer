@@ -15,6 +15,9 @@ public:
     explicit FileManager(QWidget *parent = nullptr);
     ~FileManager();
 
+public:
+    void SetModeStr(const QString& modeStr);
+
 private:
     Ui::FileManager *ui;
 };

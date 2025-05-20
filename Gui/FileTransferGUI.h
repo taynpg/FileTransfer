@@ -4,9 +4,11 @@
 #include <ClientCore.h>
 #include <QMainWindow>
 #include <thread>
+#include <QTabWidget>
 
 #include "Control/LogControl.h"
 #include "GUIUtil/GUIInterface.h"
+#include "Control/FileControl.h"
 #include "Control/ConnectControl.h"
 
 QT_BEGIN_NAMESPACE
@@ -37,6 +39,9 @@ private:
     std::shared_ptr<GUIInterface> userInterface_;
     Ui::FileTransferGUI* ui;
     LogPrint* log_;
+    QTabWidget* tabWidget_;
     Connecter* connecter_;
+    FileManager* localFile_;
+    FileManager* remoteFile_;
 };
 #endif   // FILETRANSFERGUI_H

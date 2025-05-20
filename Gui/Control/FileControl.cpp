@@ -12,3 +12,8 @@ FileManager::~FileManager()
 {
     delete ui;
 }
+
+void FileManager::SetModeStr(const QString& modeStr)
+{
+    ui->lbMode->setText(modeStr);
+}
