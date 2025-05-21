@@ -146,6 +146,8 @@
         "stop_token": "cpp",
         "cinttypes": "cpp",
         "stdfloat": "cpp",
-        "resumable": "cpp"
+        "resumable": "cpp",
+        "qtabwidget": "cpp",
+        "qtablewidget": "cpp"
     }
 }

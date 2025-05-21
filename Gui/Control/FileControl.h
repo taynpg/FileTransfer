@@ -19,6 +19,9 @@ public:
     void SetModeStr(const QString& modeStr);
 
 private:
+    void InitControl();
+
+private:
     Ui::FileManager *ui;
 };
 

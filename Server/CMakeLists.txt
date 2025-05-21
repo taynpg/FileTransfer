@@ -11,3 +11,4 @@ main.cxx
 )
 
 add_executable(FileTransferRelay ${SOURCES})
+target_link_libraries(FileTransferRelay PRIVATE Protocol)

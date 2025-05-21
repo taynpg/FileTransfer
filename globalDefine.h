@@ -8,4 +8,6 @@
 #define tr(str) (str)
 #endif
 
+#define GBUFFER_SIZE (1024 * 1024)
+
 #endif   // GLOBALDEFINE_H
