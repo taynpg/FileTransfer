@@ -53,7 +53,7 @@ private:
         buf->tid = tid;
         std::swap(buf->fid, buf->tid);
 
-        buf->dataConst = ss.str().data();
+        buf->data = ss.str().data();
         buf->len = ss.str().size();
         buf->dataType = type;
 

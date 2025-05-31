@@ -17,14 +17,14 @@
                 "ignoreFailures": true
             }
         ],
-        //"visualizerFile": "${workspaceRoot}/.vscode/qt6.natvis",
+        "visualizerFile": "${workspaceRoot}/.vscode/qt6.natvis",
         "args": []
     },
     "cmake.configureArgs": [
-        "-Wno-dev",
+        "-Wno-dev"
     ],
     "cmake.environment": {
-        "QT_LIB_ROOT": "C:/Qt/6.8.3/msvc2022_64",
+        "QT_LIB_ROOT": "C:/msys64/ucrt64/lib",
         "PATH": "${env:QT_LIB_ROOT}/bin;${env:PATH}"
     },
     "cmake.configureSettings": {

@@ -47,6 +47,9 @@ else()
 endif()
 
 target_link_libraries(FileTransferGUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ClientCore Protocol Util)
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_SYSTEM_NAME MATCHES "Windows")
+    target_link_libraries(FileTransferGUI PRIVATE ws2_32 wsock32)
+endif()
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

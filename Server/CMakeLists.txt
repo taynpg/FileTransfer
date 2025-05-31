@@ -12,3 +12,6 @@ main.cxx
 
 add_executable(FileTransferRelay ${SOURCES})
 target_link_libraries(FileTransferRelay PRIVATE Protocol)
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_SYSTEM_NAME MATCHES "Windows")
+    target_link_libraries(FileTransferRelay PRIVATE ws2_32 wsock32)
+endif()

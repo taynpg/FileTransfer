@@ -35,7 +35,7 @@ void Connecter::Connect()
     auto ip = ui->edIP->text().trimmed();
     auto port = ui->edPort->text().trimmed();
     if (ip.isEmpty() || port.isEmpty()) {
-        FTCommon::msg(this, tr("IP or Port is empty"));
+        FTCommon::msg(this, tr("IP or Port is empty."));
         return;
     }
     auto task = [this, ip, port]() {
