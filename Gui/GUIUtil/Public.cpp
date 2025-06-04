@@ -8,8 +8,7 @@ void FTCommon::msg(QWidget* parent, const QString& content)
     QMessageBox::information(parent, QObject::tr("prompt"), content);
 }
 
-bool FTCommon::affirm(QWidget* parent, const QString& titile,
-                      const QString& content)
+bool FTCommon::affirm(QWidget* parent, const QString& titile, const QString& content)
 {
     QMessageBox questionBox(parent);
     questionBox.setText(content);
@@ -24,11 +23,9 @@ bool FTCommon::affirm(QWidget* parent, const QString& titile,
     }
 }
 
-QString FTCommon::select_file(QWidget* parent, const QString& info,
-                              const QString& filter)
+QString FTCommon::select_file(QWidget* parent, const QString& info, const QString& filter)
 {
-    QString filePath =
-        QFileDialog::getOpenFileName(parent, info, QDir::homePath(), filter);
+    QString filePath = QFileDialog::getOpenFileName(parent, info, QDir::homePath(), filter);
     return filePath;
 }
 

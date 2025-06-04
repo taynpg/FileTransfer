@@ -1,7 +1,7 @@
 {
     "files.autoSave": "onFocusChange",
     "editor.fontSize": 14,
-    "editor.fontFamily": "'Source Code Pro', 'Source Code Pro', 'Source Code Pro'",
+    // "editor.fontFamily": "'Source Code Pro', 'Source Code Pro', 'Source Code Pro'",
     "terminal.integrated.fontFamily": "Source Code Pro",
     "cmake.configureOnOpen": true,
     "cmake.debugConfig": {
@@ -148,6 +148,8 @@
         "stdfloat": "cpp",
         "resumable": "cpp",
         "qtabwidget": "cpp",
-        "qtablewidget": "cpp"
+        "qtablewidget": "cpp",
+        "qapplication": "cpp",
+        "text_encoding": "cpp"
     }
 }
