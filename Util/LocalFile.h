@@ -12,12 +12,12 @@ public:
     ~LocalFile() override = default;
 
 public:
-    std::string GetErr() const;
+    std::wstring GetErr() const;
     bool GetHome() override;
-    bool GetDirFile(const std::string& dir) override;
+    bool GetDirFile(const std::wstring& dir) override;
 
 private:
-    std::string err_;
+    std::wstring err_;
 };
 
 #endif   // LOCALFILE_H

@@ -14,10 +14,10 @@ execute_process(COMMAND cmd /c ver
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 if(VER_OUTPUT MATCHES "XP")
     message(STATUS "Windows XP platform.")
-    #add_definitions(-D_WIN32_WINNT=0x0501)
+    add_definitions(-D_WIN32_WINNT=0x0501)
 else()
     message(STATUS "Windows NT platform.")
-    #add_definitions(-D_WIN32_WINNT=0x0601)
+    add_definitions(-D_WIN32_WINNT=0x0601)
 endif()
 endif()
 

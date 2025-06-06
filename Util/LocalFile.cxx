@@ -1,75 +1,69 @@
 #include "LocalFile.h"
 
+#include <chrono>
 #include <filesystem>
 #include <string>
 
+#include "Util.h"
+
 namespace fs = std::filesystem;
 
-std::string LocalFile::GetErr() const
+std::wstring LocalFile::GetErr() const
 {
     return err_;
 }
 
 bool LocalFile::GetHome()
 {
-#if defined(_WIN32)
-// _dupenv_s() was introduced in Visual Studio 2008's CRT (msvcr90) and does not seem to have made it into the system CRT
-// (msvcrt). MinGW-w64 GCC typically links only to the system CRT by default, so this symbol cannot be found.
-#if defined(__MINGW32__) || defined(__MINGW64__)
-    char* homedir = std::getenv("USERPROFILE");
-    if (homedir) {
-        err_ = tr("get env USERPROFILE failed.");
-        std::string home(homedir);
-        pathCall_(home);
-        return true;
-    }
-    return false;
-#else
-    auto err = _dupenv_s(&value, &len, "USERPROFILE");
-    if (err == 0 && value != nullptr) {
-        std::string ret(value);
-        free(value);
-        pathCall_(home);
-        return true;
-    } else {
-        err_ = tr("get env USERPROFILE failed.");
+    std::wstring home;
+    auto r = Util::GetHomeDir(home);
+    if (!r.ret) {
+        err_ = r.errMsg;
         return false;
     }
-#endif
-#else
-    char* homedir = getenv("HOME");
-    if (homedir) {
-        std::string home(homedir);
-        pathCall_(home);
-        return true;
-    }
-    err_ = tr("get env HOME failed.");
-    return false;
-#endif
+    pathCall_(home);
+    return true;
 }
 
-bool LocalFile::GetDirFile(const std::string& dir)
+bool LocalFile::GetDirFile(const std::wstring& dir)
 {
     DirFileInfoVec vec;
     fs::path path(dir);
     if (!fs::exists(path) || !fs::is_directory(path)) {
-        err_ = tr("Path is not a directory or does not exist");
+        err_ = tr(L"Path is not a directory or does not exist");
         return false;
     }
-
-    try
-    {
-        for (const auto& entry : fs::directory_iterator(path))
-        {
+    try {
+        for (const auto& entry : fs::directory_iterator(path)) {
             DirFileInfo info;
             const auto& p = entry.path();
-        }
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    
+            info.fullPath = p.wstring();
+            info.name = p.filename().wstring();
+            if (entry.is_directory()) {
+                info.type = Dir;
+                info.size = 0;
+            } else if (entry.is_regular_file()) {
+                info.type = File;
+                info.size = entry.file_size();
+            } else {
+                continue;
+            }
+            // auto lwt = entry.last_write_time();
+            // auto me = lwt.time_since_epoch();
+            // auto ms_since_epoch = std::chrono::duration_cast<std::chrono::seconds>(me);
+            // info.lastModifyTime = static_cast<uint64_t>(ms_since_epoch.count());
 
-    return false;
+            auto lwt = entry.last_write_time();
+            auto sys_time = std::chrono::time_point_cast<std::chrono::system_clock::duration>(lwt - decltype(lwt)::clock::now() +
+                                                                                              std::chrono::system_clock::now());
+            auto ms_since_epoch = std::chrono::duration_cast<std::chrono::milliseconds>(sys_time.time_since_epoch());
+            info.lastModifyTime = static_cast<uint64_t>(ms_since_epoch.count());
+            vec.vec.push_back(info);
+        }
+    } catch (const std::exception& e) {
+        err_ = Util::s2w(e.what());
+        return false;
+    }
+    infoCall_(vec);
+    return true;
 }

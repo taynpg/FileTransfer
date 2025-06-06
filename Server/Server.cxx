@@ -1,5 +1,7 @@
 #include "Server.h"
 
+#include <InfoClient.hpp>
+
 Server::Server(asio::io_context& io_context, const std::shared_ptr<spdlog::logger>& logger)
     : io_context_(io_context), acceptor_(io_context), logger_(logger)
 {
@@ -129,6 +131,30 @@ bool Server::Forward(const sockPtr& sockPtr, FrameBuffer* frame)
 
 void Server::ReplyRequest(const sockPtr& sockPtr, FrameBuffer* frame)
 {
+    switch (frame->dataType) {
+    case FBT_SER_MSG_ASKCLIENTS: {
+        auto r = ReplyOnlineList(sockPtr, frame);
+        logger_->info("reply client:{} get list ret:{}", frame->fid, r);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+bool Server::ReplyOnlineList(const sockPtr& sockPtr, FrameBuffer* frame)
+{
+    InfoClientVec infoClients;
+    {
+        std::shared_lock<std::shared_mutex> lock(cliMut_);
+        for (const auto& cli : clientMap_) {
+            InfoClient info;
+            info.id = cli.second->id;
+            info.name = cli.second->name;
+            infoClients.vec.push_back(info);
+        }
+    }
+    return Send<InfoClientVec>(sockPtr, infoClients, FBT_SER_MSG_ASKCLIENTS, frame->fid, frame->tid);
 }
 
 bool Server::Send(const sockPtr& sockPtr, FrameBuffer* frame)

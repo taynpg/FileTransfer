@@ -18,7 +18,7 @@ bool ClientCore::Connect(const std::string& ip, int port)
         cf_->Info(tr("Connected to server {}:{} success."), ip, port);
         return true;
     } catch (const std::exception& ex) {
-        cf_->Error(tr("Connect to server {}:{} failed. {}"), ip, port, Util::STLWhat(ex));
+        cf_->Error(tr("Connect to server {}:{} failed. {}"), ip, port, Util::a2u(ex.what()));
         return false;
     }
 }

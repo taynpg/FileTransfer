@@ -1,6 +1,7 @@
 #include "Util.h"
 
 #include <filesystem>
+#include <utf8.h>
 namespace fs = std::filesystem;
 
 #ifdef _WIN32
@@ -44,7 +45,7 @@ std::string ansi_to_u8(const std::string& str)
 }
 #endif
 
-UtilRet Util::GetHomeDir(std::string& home)
+UtilRet Util::GetHomeDir(std::wstring& home)
 {
     UtilRet r;
 #ifdef _WIN32
@@ -56,19 +57,19 @@ UtilRet Util::GetHomeDir(std::string& home)
         return r;
     }
     r.ret = true;
-    home = homedir;
+    home = Util::s2w(homedir);
     return r;
 #else
     char* value = nullptr;
     size_t len = 0;
     errno_t err = _dupenv_s(&value, &len, "USERPROFILE");
     if (err != 0 || value == nullptr) {
-        r.errMsg = "getenv(USERPROFILE) failed";
+        r.errMsg = L"getenv(USERPROFILE) failed";
         r.ret = false;
         return r;
     }
     r.ret = true;
-    home = value;
+    home = Util::s2w(value);
     free(value);
     return r;
 #endif
@@ -80,17 +81,17 @@ UtilRet Util::GetHomeDir(std::string& home)
         return r;
     }
     r.ret = true;
-    home = homedir;
+    home = Util::s2w(homedir);
     return r;
 #endif
 }
 
-UtilRet Util::GetDirFile(const std::string& dir, DirFileInfoVec& info)
+UtilRet Util::GetDirFile(const std::wstring& dir, DirFileInfoVec& info)
 {
     UtilRet r;
 
     if (dir.empty() || !fs::exists(dir) || !fs::is_directory(dir)) {
-        r.errMsg = "dir is empty or not exist or not a directory";
+        r.errMsg = L"dir is empty or not exist or not a directory";
         r.ret = false;
         return r;
     }
@@ -99,7 +100,7 @@ UtilRet Util::GetDirFile(const std::string& dir, DirFileInfoVec& info)
     try {
         for (auto& p : fs::directory_iterator(dir)) {
             DirFileInfo df;
-            df.name = p.path().filename().string();
+            df.name = p.path().filename().wstring();
             df.size = fs::file_size(p.path());
             if (fs::is_directory(p.path())) {
                 df.type = Dir;
@@ -108,11 +109,11 @@ UtilRet Util::GetDirFile(const std::string& dir, DirFileInfoVec& info)
             } else {
                 df.type = Other;
             }
-            df.fullPath = p.path().string();
+            df.fullPath = p.path().wstring();
             info.vec.push_back(df);
         }
     } catch (const std::exception& e) {
-        r.errMsg = e.what();
+        r.errMsg = Util::s2w(e.what());
         r.ret = false;
         return r;
     }
@@ -120,11 +121,42 @@ UtilRet Util::GetDirFile(const std::string& dir, DirFileInfoVec& info)
     return r;
 }
 
-std::string Util::STLWhat(const std::exception& e)
+std::string Util::w2s(const std::wstring& str)
+{
+    std::string utf8_result;
+    try {
+        utf8::utf16to8(str.begin(), str.end(), std::back_inserter(utf8_result));
+    } catch (const std::exception& e) {
+        return "";
+    }
+    return utf8_result;
+}
+
+std::wstring Util::s2w(const std::string& str)
+{
+    std::wstring wide_result;
+    try {
+        utf8::utf8to16(str.begin(), str.end(), std::back_inserter(wide_result));
+    } catch (const std::exception& e) {
+        return L"";
+    }
+    return wide_result;
+}
+
+std::string Util::a2u(const std::string& str)
 {
 #ifdef _WIN32
-    return ansi_to_u8(e.what());
+    return ansi_to_u8(str);
 #else
-    return e.what();
+    return str;
 #endif
+}
+
+void DirFileHelper::registerPathCall(const std::function<void(const std::wstring& path)>& call)
+{
+    pathCall_ = call;
+}
+void DirFileHelper::registerFileCall(const std::function<void(const DirFileInfoVec& vec)>& call)
+{
+    infoCall_ = call;
 }

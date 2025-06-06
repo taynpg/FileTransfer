@@ -4,13 +4,12 @@
 
 int main(int argc, char* argv[])
 {
-    setlocale(LC_ALL, ".utf-8");
     QApplication a(argc, argv);
 
 #ifdef _WIN32
-    QFont font("Microsoft YaHei", 9);
+    QFont font("Microsoft YaHei", 10);
     a.setFont(font);
-    //a.setStyle("windows");
+    a.setStyle("windows");
 #endif
 
     FileTransferGUI w;

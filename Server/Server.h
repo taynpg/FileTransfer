@@ -18,6 +18,7 @@ struct TranClient {
     sockPtr mSock;
     MutBuffer buffer;
     int64_t onlineTime;
+    std::string id;
     std::string name;
     highClock_t lastRecvTime;
     std::array<char, GBUFFER_SIZE> buf;
@@ -38,6 +39,9 @@ private:
     void thClientThread(const sockPtr& sockPtr, const std::string& id);
     bool Forward(const sockPtr& sockPtr, FrameBuffer* frame);
     void ReplyRequest(const sockPtr& sockPtr, FrameBuffer* frame);
+
+private:
+    bool ReplyOnlineList(const sockPtr& sockPtr, FrameBuffer* frame);
 
 private:
     template <typename T>

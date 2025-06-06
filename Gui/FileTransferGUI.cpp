@@ -11,6 +11,7 @@ FileTransferGUI::FileTransferGUI(QWidget* parent) : QMainWindow(parent), ui(new 
     ControlSignal();
     ControlLayout();
     LastStart();
+    resize(1500, 800);
 }
 
 FileTransferGUI::~FileTransferGUI()
@@ -40,6 +41,8 @@ void FileTransferGUI::InitControl()
     localFile_->SetModeStr(tr("Local File:"));
     remoteFile_->SetModeStr(tr("Remote File:"));
 
+    localFile_->SetLogPrint(log_);
+
     tabWidget_ = new QTabWidget(this);
 }
 
@@ -59,14 +62,15 @@ void FileTransferGUI::ControlLayout()
     sConnect->setHandleWidth(1);
     sFile->setHandleWidth(1);
 
-    sTop->addWidget(log_);
+    sTop->addWidget(tabWidget_);
     sTop->addWidget(connecter_);
+    tabWidget_->addTab(log_, tr("Log"));
+
     sFile->addWidget(localFile_);
     sFile->addWidget(remoteFile_);
-    splitter->addWidget(sTop);
-    splitter->addWidget(tabWidget_);
 
-    tabWidget_->addTab(sFile, tr("Direct Transfer"));
+    splitter->addWidget(sTop);
+    splitter->addWidget(sFile);
     setCentralWidget(splitter);
 }
 

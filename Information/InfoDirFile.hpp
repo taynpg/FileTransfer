@@ -11,10 +11,10 @@
 enum FileType : uint32_t { None = 0, File, Dir, Link, Other };
 
 struct DirFileInfo {
-    std::string name;
+    std::wstring name;
     uint64_t size = 0;
     FileType type = None;
-    std::string fullPath;
+    std::wstring fullPath;
     uint16_t permission = 0;
     uint64_t lastModifyTime = 0;
     DirFileInfo() = default;
