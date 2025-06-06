@@ -25,6 +25,11 @@ FileTransferGUI::~FileTransferGUI()
 
 void FileTransferGUI::InitControl()
 {
+    QFile file(":/QtTheme/theme/Flat/Light/Green/Cyan.qss");
+    if (file.open(QFile::ReadOnly)) {
+        setStyleSheet(file.readAll());
+    }
+
     log_ = new LogPrint(this);
     userInterface_ = std::make_shared<GUIInterface>();
     userInterface_->SetLogControl(log_);

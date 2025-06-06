@@ -21,6 +21,7 @@ Control/ConnectControl.h Control/ConnectControl.cpp Control/ConnectControl.ui
 Control/CompareControl.h Control/CompareControl.cpp Control/CompareControl.ui
 GUIUtil/GUIInterface.h GUIUtil/GUIInterface.cpp
 GUIUtil/Public.h GUIUtil/Public.cpp
+Res/QtTheme.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

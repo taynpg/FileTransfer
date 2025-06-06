@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <thread>
 #include <QTabWidget>
+#include <QFile>
 
 #include "Control/LogControl.h"
 #include "GUIUtil/GUIInterface.h"

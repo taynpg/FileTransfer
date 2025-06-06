@@ -7,9 +7,9 @@ int main(int argc, char* argv[])
     QApplication a(argc, argv);
 
 #ifdef _WIN32
-    QFont font("Microsoft YaHei", 10);
-    a.setFont(font);
-    a.setStyle("windows");
+    // QFont font("Microsoft YaHei", 9);
+    // a.setFont(font);
+    // a.setStyle("Windows");
 #endif
 
     FileTransferGUI w;
