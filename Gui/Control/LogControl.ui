@@ -6,25 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>261</height>
+    <width>767</width>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>LogPrinter</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QListView" name="listView"/>
-      </item>
-     </layout>
-    </widget>
+    <widget class="QListView" name="listView"/>
    </item>
   </layout>
  </widget>
